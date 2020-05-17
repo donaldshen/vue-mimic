@@ -23,6 +23,24 @@ const resolve = (p) => {
 }
 
 const builds = {
+  // Runtime+compiler ES modules build (for bundlers)
+  'web-full-esm': {
+    entry: resolve('web/entry-runtime-with-compiler.js'),
+    dest: resolve('dist/vue.esm.js'),
+    format: 'es',
+    alias: {he: './entity-decoder'},
+    banner,
+  },
+  // Runtime+compiler ES modules build (for direct import in browser)
+  'web-full-esm-browser-prod': {
+    entry: resolve('web/entry-runtime-with-compiler.js'),
+    dest: resolve('dist/vue.esm.browser.min.js'),
+    format: 'es',
+    transpile: false,
+    env: 'production',
+    alias: {he: './entity-decoder'},
+    banner,
+  },
   // Runtime+compiler development build (Browser)
   'web-full-dev': {
     entry: resolve('web/entry-runtime-with-compiler.js'),
@@ -41,8 +59,8 @@ function genConfig(name) {
     external: opts.external,
     // TODO: 所有插件都要重新测试
     plugins: [
-      alias({...aliases, ...opts.alias}),
-      ...opts.plugins,
+      alias({entries: {...aliases, ...opts.alias}}),
+      ...(opts.plugins || []),
       // built-in vars
       replace({
         __VERSION__: version,
@@ -53,7 +71,7 @@ function genConfig(name) {
         // build-specific env
         ...(opts.env ? {'process.env.NODE_ENV': JSON.stringify(opts.env)} : {}),
       }),
-      ...(opts.transpile !== false && buble()),
+      ...(opts.transpile !== false ? [buble()] : []),
     ],
     output: {
       file: opts.dest,
