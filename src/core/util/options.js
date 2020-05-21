@@ -333,32 +333,30 @@ function normalizeProps(options, vm) {
   options.props = res
 }
 
-// /**
-//  * Normalize all injections into Object-based format
-//  */
-// function normalizeInject (options: Object, vm: ?Component) {
-//   const inject = options.inject
-//   if (!inject) return
-//   const normalized = options.inject = {}
-//   if (Array.isArray(inject)) {
-//     for (let i = 0; i < inject.length; i++) {
-//       normalized[inject[i]] = { from: inject[i] }
-//     }
-//   } else if (isPlainObject(inject)) {
-//     for (const key in inject) {
-//       const val = inject[key]
-//       normalized[key] = isPlainObject(val)
-//         ? extend({ from: key }, val)
-//         : { from: val }
-//     }
-//   } else if (process.env.NODE_ENV !== 'production') {
-//     warn(
-//       `Invalid value for option "inject": expected an Array or an Object, ` +
-//       `but got ${toRawType(inject)}.`,
-//       vm
-//     )
-//   }
-// }
+/**
+ * Normalize all injections into Object-based format
+ */
+function normalizeInject(options, vm) {
+  const {inject} = options
+  if (!inject) return
+  const normalized = (options.inject = {})
+  if (Array.isArray(inject)) {
+    inject.forEach((val) => (normalized[val] = {from: val}))
+  } else if (isPlainObject(inject)) {
+    for (const key in inject) {
+      const val = inject[key]
+      normalized[key] = isPlainObject(val)
+        ? extend({from: key}, val)
+        : {from: val}
+    }
+  } else if (process.env.NODE_ENV !== 'production') {
+    warn(
+      `Invalid value for option "inject": expected an Array or an Object, ` +
+        `but got ${toRawType(inject)}.`,
+      vm,
+    )
+  }
+}
 
 // /**
 //  * Normalize raw function directives into object format.
@@ -400,7 +398,7 @@ export function mergeOptions(parent, child, vm) {
   }
 
   normalizeProps(child, vm)
-  // normalizeInject(child, vm)
+  normalizeInject(child, vm)
   // normalizeDirectives(child)
 
   // // Apply extends and mixins on the child options,
