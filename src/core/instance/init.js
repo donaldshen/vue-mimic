@@ -1,7 +1,7 @@
 // /* @flow */
 
 import config from '../config'
-// import { initProxy } from './proxy'
+import {initProxy} from './proxy'
 // import { initState } from './state'
 // import { initRender } from './render'
 // import { initEvents } from './events'
@@ -42,12 +42,12 @@ export function initMixin(Vue) {
     //     vm,
     //   )
     // }
-    // /* istanbul ignore else */
-    // if (process.env.NODE_ENV !== 'production') {
-    //   initProxy(vm)
-    // } else {
-    //   vm._renderProxy = vm
-    // }
+    /* istanbul ignore else */
+    if (process.env.NODE_ENV !== 'production') {
+      initProxy(vm)
+    } else {
+      vm._renderProxy = vm
+    }
     // // expose real self
     // vm._self = vm
     // initLifecycle(vm)

@@ -48,11 +48,11 @@ export default {
   //    */
   //   ignoredElements: [],
 
-  //   /**
-  //    * Custom user key aliases for v-on
-  //    */
-  //   // $flow-disable-line
-  //   keyCodes: Object.create(null),
+  /**
+   * Custom user key aliases for v-on
+   */
+  // $flow-disable-line
+  keyCodes: Object.create(null),
 
   //   /**
   //    * Check if a tag is reserved so that it cannot be registered as a
