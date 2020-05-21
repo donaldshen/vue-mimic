@@ -31,18 +31,18 @@ export function initMixin(Vue) {
     // a flag to avoid this being observed
     vm._isVue = true
     // merge options
-    // if (options && options._isComponent) {
-    //   // optimize internal component instantiation
-    //   // since dynamic options merging is pretty slow, and none of the
-    //   // internal component options needs special treatment.
-    //   initInternalComponent(vm, options)
-    // } else {
-    //   vm.$options = mergeOptions(
-    //     resolveConstructorOptions(vm.constructor),
-    //     options || {},
-    //     vm,
-    //   )
-    // }
+    if (options && options._isComponent) {
+      // optimize internal component instantiation
+      // since dynamic options merging is pretty slow, and none of the
+      // internal component options needs special treatment.
+      initInternalComponent(vm, options)
+    } else {
+      // vm.$options = mergeOptions(
+      //   resolveConstructorOptions(vm.constructor),
+      //   options || {},
+      //   vm,
+      // )
+    }
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
       initProxy(vm)
@@ -73,24 +73,26 @@ export function initMixin(Vue) {
   }
 }
 
-// export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
-//   const opts = vm.$options = Object.create(vm.constructor.options)
-//   // doing this because it's faster than dynamic enumeration.
-//   const parentVnode = options._parentVnode
-//   opts.parent = options.parent
-//   opts._parentVnode = parentVnode
+// REVIEW: 这里有很多内部定义的属性，之后再看看
+export function initInternalComponent(vm, options) {
+  // REVIEW: 何时会在 constructor 上挂 options
+  const opts = (vm.$options = Object.create(vm.constructor.options))
+  // doing this because it's faster than dynamic enumeration.
+  const parentVnode = options._parentVnode
+  opts.parent = options.parent
+  opts._parentVnode = parentVnode
 
-//   const vnodeComponentOptions = parentVnode.componentOptions
-//   opts.propsData = vnodeComponentOptions.propsData
-//   opts._parentListeners = vnodeComponentOptions.listeners
-//   opts._renderChildren = vnodeComponentOptions.children
-//   opts._componentTag = vnodeComponentOptions.tag
+  const vnodeComponentOptions = parentVnode.componentOptions
+  opts.propsData = vnodeComponentOptions.propsData
+  opts._parentListeners = vnodeComponentOptions.listeners
+  opts._renderChildren = vnodeComponentOptions.children
+  opts._componentTag = vnodeComponentOptions.tag
 
-//   if (options.render) {
-//     opts.render = options.render
-//     opts.staticRenderFns = options.staticRenderFns
-//   }
-// }
+  if (options.render) {
+    opts.render = options.render
+    opts.staticRenderFns = options.staticRenderFns
+  }
+}
 
 // export function resolveConstructorOptions (Ctor: Class<Component>) {
 //   let options = Ctor.options
