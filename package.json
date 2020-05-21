@@ -5,6 +5,7 @@
   "author": "Donald Shen <825870831@qq.com>",
   "license": "MIT",
   "scripts": {
+    "dev": "rollup -w -c scripts/config.js --environment TARGET:web-full-dev",
     "build": "node scripts/build.js"
   },
   "devDependencies": {
