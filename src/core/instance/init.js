@@ -6,7 +6,8 @@ import {initProxy} from './proxy'
 // import { initRender } from './render'
 // import { initEvents } from './events'
 import {mark, measure} from '../util/perf'
-// import { initLifecycle, callHook } from './lifecycle'
+// import {callHook} from './lifecycle'
+import {initLifecycle} from './lifecycle'
 // import { initProvide, initInjections } from './inject'
 // import { extend, mergeOptions } from '../util/index'
 import {formatComponentName} from '../util/index'
@@ -49,8 +50,8 @@ export function initMixin(Vue) {
       vm._renderProxy = vm
     }
     // // expose real self
-    // vm._self = vm
-    // initLifecycle(vm)
+    vm._self = vm
+    initLifecycle(vm)
     // initEvents(vm)
     // initRender(vm)
     // callHook(vm, 'beforeCreate')
