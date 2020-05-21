@@ -1,14 +1,15 @@
 // /* @flow */
 
-// import config from '../config'
+import config from '../config'
 // import { initProxy } from './proxy'
 // import { initState } from './state'
 // import { initRender } from './render'
 // import { initEvents } from './events'
-// import {mark, measure} from '../util/perf'
+import {mark, measure} from '../util/perf'
 // import { initLifecycle, callHook } from './lifecycle'
 // import { initProvide, initInjections } from './inject'
-// import { extend, mergeOptions, formatComponentName } from '../util/index'
+// import { extend, mergeOptions } from '../util/index'
+import {formatComponentName} from '../util/index'
 
 let uid = 0
 
@@ -20,11 +21,11 @@ export function initMixin(Vue) {
 
     let startTag, endTag
     /* istanbul ignore if */
-    // if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-    //   startTag = `vue-perf-start:${vm._uid}`
-    //   endTag = `vue-perf-end:${vm._uid}`
-    //   mark(startTag)
-    // }
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+      startTag = `vue-perf-start:${vm._uid}`
+      endTag = `vue-perf-end:${vm._uid}`
+      mark(startTag)
+    }
 
     // a flag to avoid this being observed
     vm._isVue = true
@@ -59,11 +60,11 @@ export function initMixin(Vue) {
     // callHook(vm, 'created')
 
     /* istanbul ignore if */
-    // if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-    //   vm._name = formatComponentName(vm, false)
-    //   mark(endTag)
-    //   measure(`vue ${vm._name} init`, startTag, endTag)
-    // }
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
+      vm._name = formatComponentName(vm, false)
+      mark(endTag)
+      measure(`vue ${vm._name} init`, startTag, endTag)
+    }
 
     // if (vm.$options.el) {
     //   vm.$mount(vm.$options.el)
