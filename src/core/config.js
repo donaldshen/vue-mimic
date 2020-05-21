@@ -1,8 +1,4 @@
-// import {
-//   no,
-//   noop,
-//   identity
-// } from 'shared/util'
+import {no, noop, identity} from 'shared/util'
 
 // import { LIFECYCLE_HOOKS } from 'shared/constants'
 
@@ -54,11 +50,11 @@ export default {
   // $flow-disable-line
   keyCodes: Object.create(null),
 
-  //   /**
-  //    * Check if a tag is reserved so that it cannot be registered as a
-  //    * component. This is platform-dependent and may be overwritten.
-  //    */
-  //   isReservedTag: no,
+  /**
+   * Check if a tag is reserved so that it cannot be registered as a
+   * component. This is platform-dependent and may be overwritten.
+   */
+  isReservedTag: no,
 
   //   /**
   //    * Check if an attribute is reserved so that it cannot be used as a component

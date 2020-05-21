@@ -9,8 +9,8 @@ import {mark, measure} from '../util/perf'
 // import {callHook} from './lifecycle'
 import {initLifecycle} from './lifecycle'
 // import { initProvide, initInjections } from './inject'
-// import { extend, mergeOptions } from '../util/index'
-import {formatComponentName} from '../util/index'
+// import { extend } from '../util/index'
+import {mergeOptions, formatComponentName} from '../util/index'
 
 let uid = 0
 
@@ -37,11 +37,11 @@ export function initMixin(Vue) {
       // internal component options needs special treatment.
       initInternalComponent(vm, options)
     } else {
-      // vm.$options = mergeOptions(
-      //   resolveConstructorOptions(vm.constructor),
-      //   options || {},
-      //   vm,
-      // )
+      vm.$options = mergeOptions(
+        // resolveConstructorOptions(vm.constructor),
+        options || {},
+        vm,
+      )
     }
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
