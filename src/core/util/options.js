@@ -296,43 +296,42 @@ export function validateComponentName(name) {
   }
 }
 
-// /**
-//  * Ensure all props option syntax are normalized into the
-//  * Object-based format.
-//  */
-// function normalizeProps (options: Object, vm: ?Component) {
-//   const props = options.props
-//   if (!props) return
-//   const res = {}
-//   let i, val, name
-//   if (Array.isArray(props)) {
-//     i = props.length
-//     while (i--) {
-//       val = props[i]
-//       if (typeof val === 'string') {
-//         name = camelize(val)
-//         res[name] = { type: null }
-//       } else if (process.env.NODE_ENV !== 'production') {
-//         warn('props must be strings when using array syntax.')
-//       }
-//     }
-//   } else if (isPlainObject(props)) {
-//     for (const key in props) {
-//       val = props[key]
-//       name = camelize(key)
-//       res[name] = isPlainObject(val)
-//         ? val
-//         : { type: val }
-//     }
-//   } else if (process.env.NODE_ENV !== 'production') {
-//     warn(
-//       `Invalid value for option "props": expected an Array or an Object, ` +
-//       `but got ${toRawType(props)}.`,
-//       vm
-//     )
-//   }
-//   options.props = res
-// }
+/**
+ * Ensure all props option syntax are normalized into the
+ * Object-based format.
+ */
+function normalizeProps(options, vm) {
+  const {props} = options
+  if (!props) return
+  const res = {}
+  let i, val, name
+  if (Array.isArray(props)) {
+    i = props.length
+    // 倒过来应该也没啥深意吧，for (const val of props) 不香吗
+    while (i--) {
+      val = props[i]
+      if (typeof val === 'string') {
+        name = camelize(val)
+        res[name] = {type: null}
+      } else if (process.env.NODE_ENV !== 'production') {
+        warn('props must be strings when using array syntax.')
+      }
+    }
+  } else if (isPlainObject(props)) {
+    for (const key in props) {
+      val = props[key]
+      name = camelize(key)
+      res[name] = isPlainObject(val) ? val : {type: val}
+    }
+  } else if (process.env.NODE_ENV !== 'production') {
+    warn(
+      `Invalid value for option "props": expected an Array or an Object, ` +
+        `but got ${toRawType(props)}.`,
+      vm,
+    )
+  }
+  options.props = res
+}
 
 // /**
 //  * Normalize all injections into Object-based format
@@ -395,11 +394,12 @@ export function mergeOptions(parent, child, vm) {
     checkComponents(child)
   }
 
-  // if (typeof child === 'function') {
-  //   child = child.options
-  // }
+  // REVIEW: child 也就是 options 什么时候会是函数？可能有 initMixin 外别的用法
+  if (typeof child === 'function') {
+    child = child.options
+  }
 
-  // normalizeProps(child, vm)
+  normalizeProps(child, vm)
   // normalizeInject(child, vm)
   // normalizeDirectives(child)
 

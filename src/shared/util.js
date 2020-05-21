@@ -46,6 +46,9 @@ export function isObject(obj) {
  */
 const _toString = Object.prototype.toString
 
+/**
+ * @return Object | Array | Function | Number | String | Symbol | Undefined | Null，至少
+ */
 export function toRawType(value) {
   return _toString.call(value).slice(8, -1)
 }
