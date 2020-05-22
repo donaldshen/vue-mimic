@@ -358,20 +358,20 @@ function normalizeInject(options, vm) {
   }
 }
 
-// /**
-//  * Normalize raw function directives into object format.
-//  */
-// function normalizeDirectives (options: Object) {
-//   const dirs = options.directives
-//   if (dirs) {
-//     for (const key in dirs) {
-//       const def = dirs[key]
-//       if (typeof def === 'function') {
-//         dirs[key] = { bind: def, update: def }
-//       }
-//     }
-//   }
-// }
+/**
+ * Normalize raw function directives into object format.
+ */
+function normalizeDirectives(options) {
+  const dirs = options.directives
+  if (dirs) {
+    for (const key in dirs) {
+      const def = dirs[key]
+      if (typeof def === 'function') {
+        dirs[key] = {bind: def, update: def}
+      }
+    }
+  }
+}
 
 // function assertObjectType (name: string, value: any, vm: ?Component) {
 //   if (!isPlainObject(value)) {
@@ -399,7 +399,7 @@ export function mergeOptions(parent, child, vm) {
 
   normalizeProps(child, vm)
   normalizeInject(child, vm)
-  // normalizeDirectives(child)
+  normalizeDirectives(child)
 
   // // Apply extends and mixins on the child options,
   // // but only if it is a raw options object that isn't
