@@ -401,20 +401,21 @@ export function mergeOptions(parent, child, vm) {
   normalizeInject(child, vm)
   normalizeDirectives(child)
 
-  // // Apply extends and mixins on the child options,
-  // // but only if it is a raw options object that isn't
-  // // the result of another mergeOptions call.
-  // // Only merged options has the _base property.
-  // if (!child._base) {
-  //   if (child.extends) {
-  //     parent = mergeOptions(parent, child.extends, vm)
-  //   }
-  //   if (child.mixins) {
-  //     for (let i = 0, l = child.mixins.length; i < l; i++) {
-  //       parent = mergeOptions(parent, child.mixins[i], vm)
-  //     }
-  //   }
-  // }
+  // Apply extends and mixins on the child options,
+  // but only if it is a raw options object that isn't
+  // the result of another mergeOptions call.
+  // Only merged options has the _base property.
+  // REVIEW: 什么时候标注的 _base?
+  if (!child._base) {
+    if (child.extends) {
+      parent = mergeOptions(parent, child.extends, vm)
+    }
+    if (child.mixins) {
+      for (let i = 0, l = child.mixins.length; i < l; i++) {
+        parent = mergeOptions(parent, child.mixins[i], vm)
+      }
+    }
+  }
 
   const options = {}
   // let key
