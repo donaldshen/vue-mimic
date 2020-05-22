@@ -3,11 +3,10 @@ import {no, noop, identity} from 'shared/util'
 // import { LIFECYCLE_HOOKS } from 'shared/constants'
 
 export default {
-  //   /**
-  //    * Option merge strategies (used in core/util/options)
-  //    */
-  //   // $flow-disable-line
-  //   optionMergeStrategies: Object.create(null),
+  /**
+   * Option merge strategies (used in core/util/options)
+   */
+  optionMergeStrategies: Object.create(null),
 
   /**
    * Whether to suppress warnings.

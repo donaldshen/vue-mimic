@@ -21,27 +21,27 @@ import {
   isPlainObject,
 } from 'shared/util'
 
-// /**
-//  * Option overwriting strategies are functions that handle
-//  * how to merge a parent option value and a child option
-//  * value into the final value.
-//  */
-// const strats = config.optionMergeStrategies
+/**
+ * Option overwriting strategies are functions that handle
+ * how to merge a parent option value and a child option
+ * value into the final value.
+ */
+const strats = config.optionMergeStrategies
 
-// /**
-//  * Options with restrictions
-//  */
-// if (process.env.NODE_ENV !== 'production') {
-//   strats.el = strats.propsData = function (parent, child, vm, key) {
-//     if (!vm) {
-//       warn(
-//         `option "${key}" can only be used during instance ` +
-//         'creation with the `new` keyword.'
-//       )
-//     }
-//     return defaultStrat(parent, child)
-//   }
-// }
+/**
+ * Options with restrictions
+ */
+if (process.env.NODE_ENV !== 'production') {
+  strats.el = strats.propsData = function (parent, child, vm, key) {
+    if (!vm) {
+      warn(
+        `option "${key}" can only be used during instance ` +
+          'creation with the `new` keyword.',
+      )
+    }
+    return defaultStrat(parent, child)
+  }
+}
 
 // /**
 //  * Helper that recursively merges two data objects together.
@@ -258,14 +258,13 @@ import {
 // }
 // strats.provide = mergeDataOrFn
 
-// /**
-//  * Default strategy.
-//  */
-// const defaultStrat = function (parentVal: any, childVal: any): any {
-//   return childVal === undefined
-//     ? parentVal
-//     : childVal
-// }
+/**
+ * Default strategy.
+ * 优先用 child
+ */
+const defaultStrat = function (parentVal, childVal) {
+  return childVal === undefined ? parentVal : childVal
+}
 
 /**
  * Validate component names
@@ -418,19 +417,19 @@ export function mergeOptions(parent, child, vm) {
   }
 
   const options = {}
-  // let key
-  // for (key in parent) {
-  //   mergeField(key)
-  // }
-  // for (key in child) {
-  //   if (!hasOwn(parent, key)) {
-  //     mergeField(key)
-  //   }
-  // }
-  // function mergeField(key) {
-  //   const strat = strats[key] || defaultStrat
-  //   options[key] = strat(parent[key], child[key], vm, key)
-  // }
+  let key
+  for (key in parent) {
+    mergeField(key)
+  }
+  for (key in child) {
+    if (!hasOwn(parent, key)) {
+      mergeField(key)
+    }
+  }
+  function mergeField(key) {
+    const strat = strats[key] || defaultStrat
+    options[key] = strat(parent[key], child[key], vm, key)
+  }
   return options
 }
 
