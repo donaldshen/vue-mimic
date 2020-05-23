@@ -7,7 +7,7 @@
 //   formatComponentName,
 //   invokeWithErrorHandling
 // } from '../util/index'
-// import { updateListeners } from '../vdom/helpers/index'
+import {updateListeners} from '../vdom/helpers/index'
 
 export function initEvents(vm) {
   vm._events = Object.create(null)
