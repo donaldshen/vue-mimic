@@ -4,7 +4,7 @@ import config from '../config'
 import {warn} from './debug'
 import {inBrowser} from './env'
 import {isPromise} from 'shared/util'
-// import { pushTarget, popTarget } from '../observer/dep'
+import {pushTarget, popTarget} from '../observer/dep'
 
 export function handleError(err, vm, info) {
   // Deactivate deps tracking while processing error handler to avoid possible infinite rendering.
