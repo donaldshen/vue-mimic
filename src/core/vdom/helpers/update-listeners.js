@@ -1,9 +1,6 @@
 // /* @flow */
 
-import {
-  warn,
-  //   invokeWithErrorHandling
-} from 'core/util/index'
+import {warn, invokeWithErrorHandling} from 'core/util/index'
 import {cached, isUndef, isTrue} from 'shared/util'
 
 const normalizeEvent = cached((name) => {
@@ -39,9 +36,9 @@ export function createFnInvoker(fns, vm) {
 }
 
 export function updateListeners(on, oldOn, add, remove, createOnceHandler, vm) {
-  let name, def, cur, old, event
+  let name, cur, old, event
   for (name in on) {
-    def = cur = on[name]
+    cur = on[name]
     old = oldOn[name]
     event = normalizeEvent(name)
     if (isUndef(cur)) {
