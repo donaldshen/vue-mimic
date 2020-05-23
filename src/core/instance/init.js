@@ -4,7 +4,7 @@ import config from '../config'
 import {initProxy} from './proxy'
 // import { initState } from './state'
 // import { initRender } from './render'
-// import { initEvents } from './events'
+import {initEvents} from './events'
 import {mark, measure} from '../util/perf'
 // import {callHook} from './lifecycle'
 import {initLifecycle} from './lifecycle'
@@ -52,7 +52,7 @@ export function initMixin(Vue) {
     // // expose real self
     vm._self = vm
     initLifecycle(vm)
-    // initEvents(vm)
+    initEvents(vm)
     // initRender(vm)
     // callHook(vm, 'beforeCreate')
     // initInjections(vm) // resolve injections before data/props
