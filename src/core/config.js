@@ -28,10 +28,10 @@ export default {
    */
   performance: false,
 
-  //   /**
-  //    * Error handler for watcher errors
-  //    */
-  //   errorHandler: null,
+  /**
+   * Error handler for watcher errors
+   */
+  errorHandler: null,
 
   /**
    * Warn handler for watcher warns
