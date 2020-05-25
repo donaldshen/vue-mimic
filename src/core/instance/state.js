@@ -16,7 +16,7 @@ import Dep, {pushTarget, popTarget} from '../observer/dep'
 import {
   warn,
   //   bind,
-  //   noop,
+  noop,
   hasOwn,
   //   hyphenate,
   isReserved,
@@ -28,22 +28,22 @@ import {
   //   isReservedAttribute
 } from '../util/index'
 
-// const sharedPropertyDefinition = {
-//   enumerable: true,
-//   configurable: true,
-//   get: noop,
-//   set: noop
-// }
+const sharedPropertyDefinition = {
+  enumerable: true,
+  configurable: true,
+  get: noop,
+  set: noop,
+}
 
-// export function proxy (target, sourceKey, key) {
-//   sharedPropertyDefinition.get = function proxyGetter () {
-//     return this[sourceKey][key]
-//   }
-//   sharedPropertyDefinition.set = function proxySetter (val) {
-//     this[sourceKey][key] = val
-//   }
-//   Object.defineProperty(target, key, sharedPropertyDefinition)
-// }
+export function proxy(target, sourceKey, key) {
+  sharedPropertyDefinition.get = function proxyGetter() {
+    return this[sourceKey][key]
+  }
+  sharedPropertyDefinition.set = function proxySetter(val) {
+    this[sourceKey][key] = val
+  }
+  Object.defineProperty(target, key, sharedPropertyDefinition)
+}
 
 export function initState(vm) {
   vm._watchers = []
@@ -141,7 +141,7 @@ function initData(vm) {
           vm,
         )
     } else if (!isReserved(key)) {
-      // proxy(vm, `_data`, key)
+      proxy(vm, `_data`, key)
     }
   }
   // observe data
