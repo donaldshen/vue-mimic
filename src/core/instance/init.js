@@ -2,7 +2,7 @@
 
 import config from '../config'
 import {initProxy} from './proxy'
-// import { initState } from './state'
+import {initState} from './state'
 // import { initRender } from './render'
 import {initEvents} from './events'
 import {mark, measure} from '../util/perf'
@@ -56,7 +56,7 @@ export function initMixin(Vue) {
     // initRender(vm)
     // callHook(vm, 'beforeCreate')
     // initInjections(vm) // resolve injections before data/props
-    // initState(vm)
+    initState(vm)
     // initProvide(vm) // resolve provide after data/props
     // callHook(vm, 'created')
 
